@@ -61,5 +61,5 @@ sanity_check_paths = {
     'files': ['bin/vasp-gamma', 'bin/makeparam', 'bin/vasp'],
     'dirs': []
 }
-group = "soft_vasp4"
+#group = "soft_vasp4"
 moduleclass = 'phys'
