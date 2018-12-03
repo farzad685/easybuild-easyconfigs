@@ -21,45 +21,45 @@ checksums = [
 ]
 
 # disable SSE detection to give EasyBuild full control over optimization compiler flags being used
-configopts = '-DWITH_CPU_SSE=OFF -DCMAKE_C_FLAGS_RELEASE="-DNDEBUG" -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" '
+configopts_single = '-DWITH_CPU_SSE=OFF -DCMAKE_C_FLAGS_RELEASE="-DNDEBUG" -DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" '
 
 # these are needed until extra dependencies are added for them to work
-configopts += '-DWITH_INSTALL_PORTABLE=OFF '
-configopts += '-DWITH_GAMEENGINE=OFF '
-configopts += '-DWITH_CYCLES_LOGGING=OFF '
-configopts += '-DWITH_SYSTEM_GLEW=OFF '
+configopts_single += '-DWITH_INSTALL_PORTABLE=OFF '
+configopts_single += '-DWITH_GAMEENGINE=OFF '
+configopts_single += '-DWITH_CYCLES_LOGGING=OFF '
+configopts_single += '-DWITH_SYSTEM_GLEW=OFF '
 
-configopts += '-DPYTHON_VERSION=%(pyshortver)s -DPYTHON_LIBRARY=${EBROOTPYTHON}/lib/libpython%(pyshortver)sm.so '
-configopts += '-DPYTHON_INCLUDE_DIR=${EBROOTPYTHON}/include/python%(pyshortver)sm '
-configopts += '-DOPENEXR_INCLUDE_DIR=$EBROOTOPENEXR/include '
+configopts_single += '-DOPENEXR_INCLUDE_DIR=$EBROOTOPENEXR/include '
 
-configopts += '-DX11_X11_INCLUDE_PATH=$NIXUSER_PROFILE/include '
-configopts += '-DX11_X11_LIB=$NIXUSER_PROFILE/lib/libX11.so '
+configopts_single += '-DX11_X11_INCLUDE_PATH=$NIXUSER_PROFILE/include '
+configopts_single += '-DX11_X11_LIB=$NIXUSER_PROFILE/lib/libX11.so '
 
-configopts += '-DJPEG_INCLUDE_DIR=$NIXUSER_PROFILE/include '
-configopts += '-DJPEG_LIBRARY=$NIXUSER_PROFILE/lib/libjpeg.so '
+configopts_single += '-DJPEG_INCLUDE_DIR=$NIXUSER_PROFILE/include '
+configopts_single += '-DJPEG_LIBRARY=$NIXUSER_PROFILE/lib/libjpeg.so '
 
-configopts += '-DPNG_PNG_INCLUDE_DIR=$NIXUSER_PROFILE/include '
-configopts += '-DPNG_LIBRARY=$NIXUSER_PROFILE/lib/libpng.so '
+configopts_single += '-DPNG_PNG_INCLUDE_DIR=$NIXUSER_PROFILE/include '
+configopts_single += '-DPNG_LIBRARY=$NIXUSER_PROFILE/lib/libpng.so '
 
-configopts += '-DZLIB_ROOT=$NIXUSER_PROFILE '
+configopts_single += '-DZLIB_ROOT=$NIXUSER_PROFILE '
 
-configopts += '-DFREETYPE_INCLUDE_DIRS=$NIXUSER_PROFILE/include '
-configopts += '-DFREETYPE_LIBRARY=$NIXUSER_PROFILE/lib/libfreetype.so '
+configopts_single += '-DFREETYPE_INCLUDE_DIRS=$NIXUSER_PROFILE/include '
+configopts_single += '-DFREETYPE_LIBRARY=$NIXUSER_PROFILE/lib/libfreetype.so '
 
-configopts += '-DOPENGL_INCLUDE_DIR=$NIXUSER_PROFILE/include '
-configopts += '-DOPENGL_gl_LIBRARY=$NIXUSER_PROFILE/lib/libGL.so '
-configopts += '-DOPENGL_glu_LIBRARY=$NIXUSER_PROFILE/lib/libGLU.so '
+configopts_single += '-DOPENGL_INCLUDE_DIR=$NIXUSER_PROFILE/include '
+configopts_single += '-DOPENGL_gl_LIBRARY=$NIXUSER_PROFILE/lib/libGL.so '
+configopts_single += '-DOPENGL_glu_LIBRARY=$NIXUSER_PROFILE/lib/libGLU.so '
 
-configopts += '-DOPENIMAGEIO_ROOT_DIR=$EBROOTOPENIMAGEIO '
-#configopts += '-DOPENIMAGEIO_INCLUDE_DIR=$EBROOTOPENIMAGEIO/include '
-#configopts += '-DOPENGL_gl_LIBRARY=$NIXUSER_PROFILE/lib/libGL.so '
-#configopts += '-DOPENGL_glu_LIBRARY=$NIXUSER_PROFILE/lib/libGLU.so '
+configopts_single += '-DOPENIMAGEIO_ROOT_DIR=$EBROOTOPENIMAGEIO '
 
-configopts += '-DOPENEXR_ROOT_DIR=$EBROOTOPENEXR '
+configopts_single += '-DOPENEXR_ROOT_DIR=$EBROOTOPENEXR '
+
+preconfigopts = [ 'module load python/3.5 && ', 'module load python/3.6 && ' ]
+configopts = [
+  configopts_single + ' -DPYTHON_VERSION=3.5 -DPYTHON_LIBRARY=$EBROOTPYTHON/lib/libpython3.5m.so -DPYTHON_INCLUDE_DIR=$EBROOTPYTHON/include/python3.5m ',
+  configopts_single + ' -DPYTHON_VERSION=3.6 -DPYTHON_LIBRARY=$EBROOTPYTHON/lib/libpython3.6m.so -DPYTHON_INCLUDE_DIR=$EBROOTPYTHON/include/python3.6m '
+]
 
 dependencies = [
-    ('Python', '3.6.3'),
     ('Boost', '1.68.0'),
     ('OpenEXR', '2.2.1'),
     ('OpenImageIO', '1.8.15'),  # required for cycles render engine
