@@ -18,6 +18,8 @@ postinstallcmds = [ "/cvmfs/soft.computecanada.ca/easybuild/bin/setrpaths.sh --p
 allow_prepend_abs_path = True
 modextrapaths = {'PYTHONPATH': ['/cvmfs/soft.computecanada.ca/easybuild/python/site-packages']}
 
+patches = ["tarfile_sgid.patch"]
+
 moduleclass = 'lang'
 
 # python needs bzip2 to build the bz2 package
@@ -57,4 +59,3 @@ exts_list = [
 ]
 
 moduleclass = 'lang'
-

@@ -1,0 +1,15 @@
+--- Python-3.7.4-orig/Lib/tarfile.py	2019-10-25 10:01:15.272427200 -0400
++++ Python-3.7.4/Lib/tarfile.py	2019-10-25 10:07:14.638288966 -0400
+@@ -2250,7 +2250,11 @@
+         """
+         if hasattr(os, 'chmod'):
+             try:
+-                os.chmod(targetpath, tarinfo.mode)
++                # Ensure sgid bit is set on extracted files if targetpath has it
++                if os.path.isdir(targetpath):
++                   os.chmod(targetpath, tarinfo.mode | (os.lstat(os.path.dirname(targetpath)).st_mode & stat.S_ISGID))
++                else:
++                   os.chmod(targetpath, tarinfo.mode)
+             except OSError:
+                 raise ExtractError("could not change mode")
+ 
